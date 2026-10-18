@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { DataGrid } from "./components/DataGrid";
 import type { ColumnDef } from "./components/data-grid-contract";
+import { AudioVisualizer } from "./components/AudioVisualizer"; // Thêm import Bài 2
 
 interface Employee {
   id: number;
@@ -51,18 +52,71 @@ const mockData: Employee[] = [
 ];
 
 export default function App() {
+  // Thêm State để chuyển đổi qua lại giữa 2 bài
+  const [activeTab, setActiveTab] = useState<"hw1" | "hw2">("hw1");
+
   return (
-    <main style={{ padding: "32px" }}>
-      <h1 style={{ fontSize: "24px", marginBottom: "16px" }}>
-        Enterprise Data-Grid Demo (WCAG 2.2 AA)
-      </h1>
-      <DataGrid<Employee>
-        data={mockData}
-        columns={columns}
-        ariaLabel="Bảng danh sách nhân viên công ty"
-        pageSize={4}
-        onRowSelect={(item) => console.log("Đã chọn nhân viên:", item)}
-      />
+    <main style={{ padding: "32px", maxWidth: "1000px", margin: "0 auto" }}>
+      {/* Menu chuyển bài */}
+      <nav
+        style={{
+          display: "flex",
+          gap: "12px",
+          marginBottom: "32px",
+          borderBottom: "2px solid #e2e8f0",
+          paddingBottom: "16px",
+        }}
+      >
+        <button
+          onClick={() => setActiveTab("hw1")}
+          style={{
+            padding: "8px 16px",
+            cursor: "pointer",
+            fontWeight: activeTab === "hw1" ? "bold" : "normal",
+            backgroundColor: activeTab === "hw1" ? "#eff6ff" : "#fff",
+            border: "1px solid #cbd5e1",
+            borderRadius: "4px",
+          }}
+        >
+          HW 1: Data-Grid
+        </button>
+        <button
+          onClick={() => setActiveTab("hw2")}
+          style={{
+            padding: "8px 16px",
+            cursor: "pointer",
+            fontWeight: activeTab === "hw2" ? "bold" : "normal",
+            backgroundColor: activeTab === "hw2" ? "#eff6ff" : "#fff",
+            border: "1px solid #cbd5e1",
+            borderRadius: "4px",
+          }}
+        >
+          HW 2: Audio Visualizer
+        </button>
+      </nav>
+
+      {/* Giao diện Bài 1 - Giữ nguyên như cũ */}
+      {activeTab === "hw1" && (
+        <section>
+          <h1 style={{ fontSize: "24px", marginBottom: "16px" }}>
+            Enterprise Data-Grid Demo (WCAG 2.2 AA)
+          </h1>
+          <DataGrid<Employee>
+            data={mockData}
+            columns={columns}
+            ariaLabel="Bảng danh sách nhân viên công ty"
+            pageSize={4}
+            onRowSelect={(item) => console.log("Đã chọn nhân viên:", item)}
+          />
+        </section>
+      )}
+
+      {/* Giao diện Bài 2 */}
+      {activeTab === "hw2" && (
+        <section>
+          <AudioVisualizer />
+        </section>
+      )}
     </main>
   );
 }
