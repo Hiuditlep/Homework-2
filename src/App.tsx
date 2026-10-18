@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { DataGrid } from "./components/DataGrid";
 import type { ColumnDef } from "./components/data-grid-contract";
-import { AudioVisualizer } from "./components/AudioVisualizer"; // Thêm import Bài 2
+import { AudioVisualizer } from "./components/AudioVisualizer";
+import { FlashSaleEngine } from "./components/FlashSaleEngine"; // <-- Thêm import Bài 3
 
 interface Employee {
   id: number;
@@ -52,8 +53,8 @@ const mockData: Employee[] = [
 ];
 
 export default function App() {
-  // Thêm State để chuyển đổi qua lại giữa 2 bài
-  const [activeTab, setActiveTab] = useState<"hw1" | "hw2">("hw1");
+  // Thêm hw3 vào state
+  const [activeTab, setActiveTab] = useState<"hw1" | "hw2" | "hw3">("hw1");
 
   return (
     <main style={{ padding: "32px", maxWidth: "1000px", margin: "0 auto" }}>
@@ -93,6 +94,21 @@ export default function App() {
         >
           HW 2: Audio Visualizer
         </button>
+
+        {/* <-- Thêm nút cho Bài 3 --> */}
+        <button
+          onClick={() => setActiveTab("hw3")}
+          style={{
+            padding: "8px 16px",
+            cursor: "pointer",
+            fontWeight: activeTab === "hw3" ? "bold" : "normal",
+            backgroundColor: activeTab === "hw3" ? "#eff6ff" : "#fff",
+            border: "1px solid #cbd5e1",
+            borderRadius: "4px",
+          }}
+        >
+          HW 3: Flash-Sale Engine
+        </button>
       </nav>
 
       {/* Giao diện Bài 1 - Giữ nguyên như cũ */}
@@ -115,6 +131,13 @@ export default function App() {
       {activeTab === "hw2" && (
         <section>
           <AudioVisualizer />
+        </section>
+      )}
+
+      {/* <-- Thêm Giao diện Bài 3 --> */}
+      {activeTab === "hw3" && (
+        <section>
+          <FlashSaleEngine />
         </section>
       )}
     </main>
